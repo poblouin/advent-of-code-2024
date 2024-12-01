@@ -26,3 +26,10 @@ tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+tasks.register<JavaExec>("generateDay") {
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("aoc2024.utils.DayGeneratorKt")
+    workingDir = project.projectDir
+    args = (project.findProperty("args")?.toString() ?: "").split(",").filter { it.isNotEmpty() }
+}
