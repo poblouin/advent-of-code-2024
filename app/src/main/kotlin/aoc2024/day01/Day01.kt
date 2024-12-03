@@ -1,5 +1,6 @@
 package aoc2024.day01
 
+import aoc2024.utils.toIntList
 import kotlin.math.absoluteValue
 
 class Day01 {
@@ -8,7 +9,7 @@ class Day01 {
     fun part2(input: List<String>): Int = input.splitTwoLists().similarityScore()
 
     fun List<String>.splitTwoLists() =
-        map { it.split("\\s+".toRegex()).map { it.toInt() } }
+        toIntList()
             .map { it[0] to it[1] }
             .unzip()
 
