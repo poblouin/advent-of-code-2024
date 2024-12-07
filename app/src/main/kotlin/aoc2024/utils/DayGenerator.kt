@@ -51,7 +51,7 @@ fun main(args: Array<String>) {
             @MethodSource("argumentsPart1")
             fun part1(
                 file: File,
-                result: Int,
+                result: Any,
             ) {
                 solution.part1(file.readLines()) shouldBe result
             }
@@ -60,7 +60,7 @@ fun main(args: Array<String>) {
             @MethodSource("argumentsPart2")
             fun part2(
                 file: File,
-                result: Int,
+                result: Any,
             ) {
                 solution.part2(file.readLines()) shouldBe result
             }
