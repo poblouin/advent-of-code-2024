@@ -11,7 +11,7 @@ class Day06Test :
     FileLoader(
         "06",
         part1 = listOf(41, 4758),
-        part2 = listOf(0, 0),
+        part2 = listOf(6, 1670),
     ) {
     lateinit var solution: Day06
 

@@ -15,16 +15,69 @@ class Day06 {
         }
     }
 
-    fun part2(input: String): Int = 0
+    fun part2(input: String): Int {
+        input.parse().let {
+            val candidatePositions = mutableSetOf<Position>()
+
+            for (y in 0 until it.maxY) {
+                for (x in 0 until it.maxX) {
+                    val position = Position(x, y)
+                    if (position == it.currentPosition ||
+                        it.map[y][x] == '#'
+                    ) {
+                        continue
+                    }
+
+                    val currentGrid = it.copy()
+                    currentGrid.map =
+                        currentGrid.map.mapIndexed { mapY, row ->
+                            if (mapY == y) {
+                                row.substring(0, x) + '#' + row.substring(x + 1)
+                            } else {
+                                row
+                            }
+                        }
+
+                    val visited = mutableSetOf<Pair<Position, Direction>>()
+
+                    try {
+                        while (true) {
+                            val state = currentGrid.currentPosition to currentGrid.direction
+                            if (state in visited) {
+                                candidatePositions.add(position)
+                                break
+                            }
+                            visited.add(state)
+                            currentGrid.move()
+                        }
+                    } catch (_: IllegalStateException) {
+                        continue
+                    }
+                }
+            }
+
+            return candidatePositions.size
+        }
+    }
 
     class Grid(
-        val map: List<String>,
+        var map: List<String>,
         val maxX: Int,
         val maxY: Int,
         var currentPosition: Position,
         var positions: MutableSet<Position>,
         var direction: Direction,
-    )
+    ) {
+        fun copy() =
+            Grid(
+                map = map.toList(),
+                maxX = maxX,
+                maxY = maxY,
+                currentPosition = currentPosition.copy(),
+                positions = positions.toMutableSet(),
+                direction = direction,
+            )
+    }
 
     data class Position(
         val x: Int,
